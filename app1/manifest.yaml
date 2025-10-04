@@ -4,18 +4,18 @@ metadata:
   name: app1
   labels:
     app: app1
-    tair: frontend
+    tier: frontend
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: app1
-      tair: frontend
+      tier: frontend
   template:
     metadata:
       labels:
         app: app1
-        tair: frontend
+        tier: frontend
     spec:
       containers:
         - name: app1
@@ -27,11 +27,11 @@ metadata:
   name: app1
   labels:
     app: app1
-    tair: frontend
+    tier: frontend
 spec:
   selector:
     app: app1
-    tair: frontend
+    tier: frontend
   ports:
     - protocol: TCP
       port: 80
