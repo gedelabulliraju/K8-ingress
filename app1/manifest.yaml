@@ -44,7 +44,7 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTPS": 443}]'
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:946156973594:certificate/2bd0b3b6-a0d4-49c1-ae49-daae674049e5    
     alb.ingress.kubernetes.io/tags: Environment=dev,Team=devops
     alb.ingress.kubernetes.io/group.name: expense
