@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+  labels:
+    app: app1
+    tair: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+      tair: frontend
+  template:
+    metadata:
+      labels:
+        app: app1
+        tair: frontend
+    spec:
+      containers:
+        - name: app1
+          image: srlaf/app1:v1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: app1-service-port
+  labels:
+    app: app1
+    tair: frontend
+spec:
+  selector:
+    app: app1
+    tair: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app1-ingress
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:us-east-1:946156973594:certificate/2bd0b3b6-a0d4-49c1-ae49-daae674049e5    
+    alb.ingress.kubernetes.io/tags: Environment=dev,Team=devops
+    alb.ingress.kubernetes.io/group.name: expense
+spec:
+  ingressClassName: alb
+  rules:
+    - host: "app1.buddymarket.shop"
+      http:
+        paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: app1-service-port
+              port:
+                number: 80
